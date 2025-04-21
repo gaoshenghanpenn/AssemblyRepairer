@@ -44,7 +44,49 @@ This version is only used for centromere region repairment.
 * Hifi reads dir: for nucflag
 * Outdir: Output path
 
-For detail usage, run `python AssemblyRepairer.py -h`
+```Bash
+#For more details, please use python AssemblyRepairer.py target -h
+usage: AssemblyRepairer.py target [-h] -c COORDINATES_FILE -taf TARGET_REF_FILE -saf SECOND_ASSEMBLY_FILE -r
+                                  HIFI_READS_DIR -o OUTDIR [-rf HIFI_READS_SUFFIX] [-e ERROR_DIR]
+                                  [-ig NUCFLAG_IGNORE_REGIONS] [-rb ROLLBACK] [-mq MAPQ_THR]
+                                  [-bcm BREAK_CONTIG_MERGE_THR] [-mc MIN_ARRAY_THR] [-om OVERLAP_MERGE_THR]
+                                  [-k KMER_SIZE] [-kn KMER_NUMBER] [-et EXTEND_LENGTH] [-t THREADS]
 
-## Contact
+options:
+  -h, --help            show this help message and exit
+  -c COORDINATES_FILE, --coordinates_file COORDINATES_FILE
+                        the coordinates of target regions that needs to be repaired
+  -taf TARGET_REF_FILE, --target_ref_file TARGET_REF_FILE
+                        Reference assembly needs to be repaired
+  -saf SECOND_ASSEMBLY_FILE, --second_assembly_file SECOND_ASSEMBLY_FILE
+                        Second assembly use to repair
+  -r HIFI_READS_DIR, --hifi_reads_dir HIFI_READS_DIR
+                        hifi reads dir
+  -o OUTDIR, --outdir OUTDIR
+                        outdir
+  -rf HIFI_READS_SUFFIX, --hifi_reads_suffix HIFI_READS_SUFFIX
+                        hifi reads suffix
+  -e ERROR_DIR, --error_dir ERROR_DIR
+                        User-defined error regions
+  -ig NUCFLAG_IGNORE_REGIONS, --nucflag_ignore_regions NUCFLAG_IGNORE_REGIONS
+                        ignore regions for nucflag
+  -rb ROLLBACK, --rollback ROLLBACK
+                        if region not repair success, then rollback for that error region, 1 use,0 not use
+  -mq MAPQ_THR, --MAPQ_thr MAPQ_THR
+                        Mapping quality threshold
+  -bcm BREAK_CONTIG_MERGE_THR, --break_contig_merge_thr BREAK_CONTIG_MERGE_THR
+                        Merge if the interval is smaller than this distance
+  -mc MIN_ARRAY_THR, --min_array_thr MIN_ARRAY_THR
+                        Minimum array length
+  -om OVERLAP_MERGE_THR, --overlap_merge_thr OVERLAP_MERGE_THR
+                        merge, If the overlap is less than this value
+  -k KMER_SIZE, --kmer_size KMER_SIZE
+                        kmer size
+  -kn KMER_NUMBER, --kmer_number KMER_NUMBER
+                        kmer number for establishing anchor points
+  -et EXTEND_LENGTH, --extend_length EXTEND_LENGTH
+                        Extend length
+  -t THREADS, --threads THREADS
+                        Threads for alignment
+```
 
