@@ -12,7 +12,7 @@ Development tool: VScode
 | Packages           | Version |
 | ------------------ | ------- |
 | minimap2          | 2.28    |
-| pbmm2             | 1.14.99   |
+| pbmm2             | 1.17.0   |
 | nucflag              | 0.3.3 |
 | samtools         | 1.21   |
 | seqkit              | 2.9.0  |
