@@ -92,5 +92,4 @@ options:
 ## Reference
 Please cite the following paper when you use AssemblyRepairer in your work
 
-Shenghan Gao, Keisuke K. Oshima, Shu-Cheng Chuang, Mark Loftus, Annalaura Montanari, David S. Gordon, Human Genome Structural Variation Consortium, Human Pangenome Reference Consortium, PingHsun Hsieh, Miriam K. Konkel, Mario Ventura, Glennis A. Logsdon
-bioRxiv 2025.12.09.693231; doi: https://doi.org/10.64898/2025.12.09.693231
+Gao S, Oshima KK, Chuang SC, Loftus M, Montanari A, Gordon DS, Human Genome Structural Variation Consortium, Human Pangenome Reference Consortium, Hsieh P, Konkel MK, Ventura M, Logsdon GA. A global view of human centromere variation and evolution. bioRxiv. 2025. p. 2025.12.09.693231. [doi:10.64898/2025.12.09.693231](https://doi.org/10.64898/2025.12.09.693231)
