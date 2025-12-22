@@ -243,54 +243,55 @@ def run_nucflag(hifi_reads_files,target_ref_file,out_nucflag_dir,hifi_reads_mapp
 
     bam_files_list = []
     
-    inter_bam_dir = out_nucflag_dir + '/temp_bam'
-    if not os.path.exists(inter_bam_dir):
-        os.mkdir(inter_bam_dir)
+    if not os.path.exists(out_nucflag_dir + '/nucflag.bam.bai'): # if bam already there, skip alignment
+        inter_bam_dir = out_nucflag_dir + '/temp_bam'
+        if not os.path.exists(inter_bam_dir):
+            os.mkdir(inter_bam_dir)
     
-    for i in hifi_reads_files:
-        # mapping
-        # pbmm2 align         --log-level DEBUG         --preset SUBREAD         --min-length 5000         -j 24 ref reads
-        filename = i.split('/')[-1]
-        cmd = 'pbmm2 align --log-level DEBUG --preset SUBREAD --min-length 5000 -j ' + \
-            str(hifi_reads_mapping_threads) + ' ' + target_ref_file + ' ' + i + ' > ' + inter_bam_dir + '/' + filename + '.init.bam'
+        for i in hifi_reads_files:
+            # mapping
+            # pbmm2 align         --log-level DEBUG         --preset SUBREAD         --min-length 5000         -j 24 ref reads
+            filename = i.split('/')[-1]
+            cmd = 'pbmm2 align --log-level DEBUG --preset SUBREAD --min-length 5000 -j ' + \
+                str(hifi_reads_mapping_threads) + ' ' + target_ref_file + ' ' + i + ' > ' + inter_bam_dir + '/' + filename + '.init.bam'
+            os.system(cmd)
+            # samtools view -F 2308 -@  -u 
+            cmd = 'samtools view -F 2308 -@ ' + str(hifi_reads_mapping_threads) + ' -u ' + inter_bam_dir + '/' + filename + '.init.bam' + \
+                ' -o ' + inter_bam_dir + '/' + filename +'.filtered.bam'
+            os.system(cmd)
+            # samtools sort -T temp -m 4G -@ 24 -
+            cmd = 'samtools sort -T temp -m 4G -@ ' +str(hifi_reads_mapping_threads) + \
+                ' -o ' + inter_bam_dir + '/' + filename + '.bam' +' ' + inter_bam_dir + '/' + filename +'.filtered.bam'
+            os.system(cmd)
+            
+            bam_files_list.append(inter_bam_dir + '/' + filename + '.bam')
+            
+            # rm init and after-filter bam, keep after-sort bam
+            cmd = 'rm ' + inter_bam_dir + '/' + filename + '.init.bam'
+            os.system(cmd)
+            cmd = 'rm ' + inter_bam_dir + '/' + filename + '.filtered.bam'
+            os.system(cmd)
+            
+        # merge and remove    
+        bam_files = ''
+        for i in bam_files_list:
+            bam_files += i + '  '
+    
+        # samtools merge -@ 24 - bam1 bam2 bam3
+        cmd = 'samtools merge -@ ' + str(hifi_reads_mapping_threads) + ' ' + ' -o ' + out_nucflag_dir + '/nucflag.init.bam'  + '  ' + bam_files
         os.system(cmd)
-        # samtools view -F 2308 -@  -u 
-        cmd = 'samtools view -F 2308 -@ ' + str(hifi_reads_mapping_threads) + ' -u ' + inter_bam_dir + '/' + filename + '.init.bam' + \
-            ' -o ' + inter_bam_dir + '/' + filename +'.filtered.bam'
+        # samtools sort -T temp -m 4G -@ 24 -;} > results/nucflag/NA18534_hifi.bam
+        cmd = 'samtools sort -T temp -m 4G -@ ' + str(hifi_reads_mapping_threads) + ' ' + out_nucflag_dir + '/nucflag.init.bam' + ' > ' +  out_nucflag_dir + '/nucflag.bam' 
         os.system(cmd)
-        # samtools sort -T temp -m 4G -@ 24 -
-        cmd = 'samtools sort -T temp -m 4G -@ ' +str(hifi_reads_mapping_threads) + \
-            ' -o ' + inter_bam_dir + '/' + filename + '.bam' +' ' + inter_bam_dir + '/' + filename +'.filtered.bam'
+        # rm
+        cmd = 'rm ' + out_nucflag_dir + '/nucflag.init.bam'
+        os.system(cmd)
+        cmd = 'rm -rf ' + inter_bam_dir
         os.system(cmd)
         
-        bam_files_list.append(inter_bam_dir + '/' + filename + '.bam')
-        
-        # rm init and after-filter bam, keep after-sort bam
-        cmd = 'rm ' + inter_bam_dir + '/' + filename + '.init.bam'
+        # index 
+        cmd = 'samtools index ' + out_nucflag_dir + '/nucflag.bam' 
         os.system(cmd)
-        cmd = 'rm ' + inter_bam_dir + '/' + filename + '.filtered.bam'
-        os.system(cmd)
-        
-    # merge and remove    
-    bam_files = ''
-    for i in bam_files_list:
-        bam_files += i + '  '
-    
-    # samtools merge -@ 24 - bam1 bam2 bam3
-    cmd = 'samtools merge -@ ' + str(hifi_reads_mapping_threads) + ' ' + ' -o ' + out_nucflag_dir + '/nucflag.init.bam'  + '  ' + bam_files
-    os.system(cmd)
-    # samtools sort -T temp -m 4G -@ 24 -;} > results/nucflag/NA18534_hifi.bam
-    cmd = 'samtools sort -T temp -m 4G -@ ' + str(hifi_reads_mapping_threads) + ' ' + out_nucflag_dir + '/nucflag.init.bam' + ' > ' +  out_nucflag_dir + '/nucflag.bam' 
-    os.system(cmd)
-    # rm
-    cmd = 'rm ' + out_nucflag_dir + '/nucflag.init.bam'
-    os.system(cmd)
-    cmd = 'rm -rf ' + inter_bam_dir
-    os.system(cmd)
-    
-    # index 
-    cmd = 'samtools index ' + out_nucflag_dir + '/nucflag.bam' 
-    os.system(cmd)
     
     # run nucflag
     cmd = 'nucflag  -i ' + out_nucflag_dir + '/nucflag.bam'  + \

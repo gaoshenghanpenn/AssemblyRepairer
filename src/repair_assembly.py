@@ -62,7 +62,7 @@ def main():
     arrays = {}
     for i in files:
         if i.endswith('.fa'):
-            array_name = i.split('.')[0].split('@')[0]
+            array_name = i.split('@')[0]
             contig_name = array_name.split(':')[0] # linux
             # contig_name = array_name.split('_')[0] + '_' + array_name.split('_')[1] + '_' + array_name.split('_')[2]  
             if contig_name not in arrays.keys():

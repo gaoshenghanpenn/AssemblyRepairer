@@ -78,7 +78,7 @@ def main():
     arrays = {}
     for i in files:
         if i.endswith('.fa'):
-            array_name = i.split('.')[0].split('@')[0]
+            array_name = i.split('@')[0]
             if array_name not in success_regions:
                 continue
             
