@@ -160,11 +160,11 @@ python src/AssemblyRepairer.py target -taf ./demo/testasm/NA20355_chr16_haplotyp
     └── NA20355_chr16_haplotype2-0000183:1-3140550.fa
 ```
 Before repair
-![before](img/NA20355_chr16_haplotype2-0000183_1-3140550.png)  
+![before](img/before.png)  
 hifiasm array
-![hifiasm](img/NA20355_chr16_h2tg000041l#1-37317985_1-2861716.png)  
+![hifiasm](img/hifiasm.png)  
 After repair
-![hifiasm](img/NA20355_chr16_haplotype2-0000183_1-3145645.png)  
+![after](img/after.png)  
 
 ## Citing 
 **Gao S, Oshima KK**, Chuang SC, Loftus M, Montanari A, Gordon DS, Human Genome Structural Variation Consortium, Human Pangenome Reference Consortium, Hsieh P, Konkel MK, Ventura M, Logsdon GA. A global view of human centromere variation and evolution. bioRxiv. 2025. p. 2025.12.09.693231. [doi:10.64898/2025.12.09.693231](https://doi.org/10.64898/2025.12.09.693231)
