@@ -18,7 +18,7 @@ dependencies:
   - liblzma-devel==5.8.1 # pysam
   - pip
   - pip:
-    - nucflag==0.3.3
+    - nucflag==0.3.3.1
 ```
 The installation will take approximately a few minutes to ten minutes.  
 ```
@@ -169,3 +169,4 @@ Note: HET not consider as error.
 
 ## Citing 
 **Gao S, Oshima KK**, Chuang SC, Loftus M, Montanari A, Gordon DS, Human Genome Structural Variation Consortium, Human Pangenome Reference Consortium, Hsieh P, Konkel MK, Ventura M, Logsdon GA. A global view of human centromere variation and evolution. bioRxiv. 2025. p. 2025.12.09.693231. [doi:10.64898/2025.12.09.693231](https://doi.org/10.64898/2025.12.09.693231)
+
